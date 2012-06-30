@@ -1,0 +1,1 @@
+This program parses MTGO draft logs into an HTML page for easy viewing. It does not include it's own web server. Just host the directory containing the source files and run it.

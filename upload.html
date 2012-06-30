@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MTGO Draft Viewer</title>	
+	<link rel="stylesheet" type="text/css" href="upload.css" />
+</head>
+<body>
+	<h1>MTGO Draft Viewer</h1>
+	<div id="content">
+	<form action="/draft/upload" method="post" enctype="multipart/form-data">
+		<p>Upload a screenshot of your deck: 
+			<input class="fileinput" name="image" type="file" accept="image/*"/>
+		</p>
+		<p>Upload your draft log:
+			<input class="fileinput" name="log" type="file" accept="text/plain" required="required"/><br/>
+			<span class="hint">(Documents\Games\Magic The Gathering Online\Drafts)</span>
+		</p>
+		<p>Add your thoughts: <br/>
+			<textarea name="comments" cols="60" rows="10"></textarea>
+		</p>
+		<input id="submit" type="submit" value="Upload!" />
+	</form>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<p id="contact">
+		Feedback? Problems? Contact me: <a href="https://twitter.com/#!/malthrin">@malthrin</a>
+	</p>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{.Player}} draft {{.Date}}</title>
+	<link rel="stylesheet" type="text/css" href="draft.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		var numPacks = {{len .Packs}};
+		var numPicks = [ 1{{range .Packs}}, {{len .Picks}}{{end}} ]
+		var hasDeck = {{if .HasDeck}}true{{else}}false{{end}};
+	</script>
+	<script type="text/javascript" src="draft.js"></script>
+</head>
+<body>
+{{define "titlenav"}}
+{{if .HasDeck}}
+	<a class="packlink" href="#" data-pack="-1">Deck</a> &gt; 
+{{end}}
+{{range $index, $set := .Sets}}
+	{{if $index}} &gt; {{end}}
+	<a class="packlink" href="#" data-pack="{{$index}}">{{$set}}</a>
+{{end}}
+{{end}}
+<div id="leftnav" class="nav"><a href="#"><img class="navArrow" src="arrow_left.jpg" /></a></div>
+<div id="rightnav" class="nav"><a href="#"><img class="navArrow" src="arrow_right.jpg" /></a></div>
+<div id="center">		
+	{{if .HasDeck}}	
+	<div id="deck" class="page">		
+		<h1 class="titlenav">{{template "titlenav" .}}</h1>
+		{{if .Image}}<img id="deckImage" src="{{.Event}}/{{.Image}}"/>{{end}}
+		<p id="deckDesc">
+		{{range .Comments}}
+			{{.}}<br/>
+		{{end}}
+		</p>
+	</div>
+	{{end}}
+	{{with $draft := .}}
+	{{range $pack := .Packs}}
+		{{range .Picks}}
+			<div id="P{{$pack.Num}}p{{.Num}}" class="page">
+				<h1 class="titlenav">{{template "titlenav" $draft}} &gt; {{$pack.Num}}.{{.Num}}</h1>
+				<div class="cardArea">
+				{{range .Cards}}
+					<img class="cardImage" src="{{wizUrl $pack.Set .}}"/>
+				{{end}}
+				</div>
+				<div class="choice">
+					<img class="choiceImage" src="{{wizUrl $pack.Set .Choice}}"/>
+				</div>
+			</div>
+		{{end}}
+	{{end}}
+	{{end}}
+</div>
+</body>
+</html>

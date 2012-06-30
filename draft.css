@@ -1,0 +1,65 @@
+#center {
+	margin-left: 8%;
+	margin-right: 8%;
+}
+
+.nav {
+	width: 8%;		
+	text-align: center;
+}
+
+.navArrow {	
+	width: 70%;
+	margin-top: 200%;
+	display: inline-block;
+}
+
+.cardImage {
+	width: 11%;
+	border-style: solid;
+	border-color: black;
+	border-width: medium;
+}
+
+.choiceImage {
+	border-style: solid;
+	border-color: black;
+	border-width: medium;
+	display: block;
+	margin-left: 36%;
+	margin-top: 3%;
+}
+
+.titlenav {
+	font-family: "Verdana";
+	font-size: 180%;
+}
+
+#deckImage {
+	max-height: 70%;
+	max-width: 100%;
+}
+
+#deckDesc {
+	font-family: "Arial";
+}
+
+.packlink {
+	color: black;
+}
+
+.page {
+	display: none;
+}
+
+#deck {
+	display: inline;
+}
+
+#leftnav {
+	float: left;
+}
+
+#rightnav {
+	float: right;
+}

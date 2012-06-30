@@ -1,0 +1,31 @@
+body {
+	font-family: "Arial";	
+	margin-left: 8%;
+	margin-right: 8%;
+}
+
+p {
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+
+#submit {	
+	border: 1px solid black;
+	height: 10%;
+	width: 20%;
+	font-size: 1.2em;
+}
+
+.fileinput {
+	float: right;
+	vertical-align: top;
+}
+
+#content {
+	width: 60%;
+}
+
+.hint {
+	font-size: .8em;
+}
+
