@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"io"
 	"errors"
+	"strings"
 )
 
 type Draft struct {
@@ -72,6 +73,9 @@ func NewDraft(log io.Reader) (*Draft, error) {
 			return nil, readErr
 		}
 		line := string(lineBytes)
+		if strings.HasPrefix(line, "--:") {
+			continue
+		}
 		switch state {
 		case EventId:
 			m = eventIdReg.FindStringSubmatch(line)
