@@ -1,14 +1,8 @@
 //set by template
 //var numPacks = 3;
 //var numPicks = [1, 15, 15, 15];
-//hasDeck = true
 
-var firstPack = 0
-if (!hasDeck) {
-	firstPack = 1;
-}
-
-var currentPack = firstPack;
+var currentPack = 0;
 var currentPick = 1;
 var navHistory = [];
 for (var i =0; i<=numPacks; i++) {
@@ -39,7 +33,7 @@ function nextPick() {
 		nextPick = 1;
 		nextPack += 1;
 		if (nextPack > numPacks) {
-			nextPack = firstPack;
+			nextPack = 0;
 		}
 	}
 	displayPick(nextPack, nextPick);
@@ -50,7 +44,7 @@ function prevPick() {
 	var nextPick = currentPick - 1;
 	if (nextPick < 1) {
 		nextPack -= 1;
-		if (nextPack < firstPack) {
+		if (nextPack < 0) {
 			nextPack = numPacks;
 		}
 		nextPick = numPicks[nextPack];
@@ -69,7 +63,7 @@ function nextPage() {
 
 function prevPage() {
 	var nextPack = currentPack - 1;
-	if (nextPack < firstPack) {
+	if (nextPack < 0) {
 		//nextPack = numPacks;
 		return;
 	}
@@ -111,8 +105,5 @@ $(function () {
 		displayPick(pack, 1);
 		return false;
 	});
-	if(!hasDeck) {
-		displayPick(1, 1);
-	}
 });
 
