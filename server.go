@@ -8,6 +8,10 @@ import (
 	"os"
 )
 
+const (
+	draftFolder = "/home/zmj/web/draft"
+)
+
 func handler(w http.ResponseWriter, r *http.Request) {
 	var err error
 	var event string
@@ -41,11 +45,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	event = draft.Event
 
 	//add the comments
-	comments := strings.TrimSpace(r.FormValue("comments"))
-	draft.Comments = strings.Split(comments, "\n")
+	draft.Comments = strings.Split(r.FormValue("comments"), "\n")
 
 	//create the directory
-	mkdirErr := os.Mkdir(event, 0777)
+	mkdirErr := makeFolder(event)
 	if mkdirErr != nil { //&& !os.IsExist(mkdirErr) {
 		err = mkdirErr
 		return
@@ -57,7 +60,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		err = seekErr
 		return
 	}
-	logWriteErr := writeToFile(event+"/"+event+".log", log)
+	logWriteErr := writeToFile(event+".log", log)
 	if logWriteErr != nil {
 		err = logWriteErr
 		return
@@ -73,17 +76,33 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		defer img.Close()
 		draft.Image = imgHeader.Filename
-		writeToFile(event+"/"+draft.Image, img)
+		writeToFile(draft.Image, img)
 	}
+	draft.HasDeck = len(draft.Image)>0 || len(draft.Comments)>1
 
 	//write the html
-	f, createErr := os.Create(event+"/"+event+".html")
+	f, createErr := os.Create(event+".html")
 	if createErr != nil {
 		err = createErr
 		return
 	}
 	defer f.Close()
 	makePage(draft, f)
+}
+
+func makeFolder(event string) (err error) {
+	err = os.Chdir(draftFolder)
+	if err != nil {
+		return
+	}
+
+	err = os.Mkdir(event, 0755 | os.ModeDir)
+	if err != nil {
+		return
+	}
+
+	err = os.Chdir(event)
+	return
 }
 
 func writeToFile(path string, src io.Reader) error {
