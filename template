@@ -13,15 +13,18 @@
 </head>
 <body>
 {{define "titlenav"}}
-<a class="packlink" href="#" data-pack="-1">Deck</a>
+{{if .HasDeck}}
+	<a class="packlink" href="#" data-pack="-1">Deck</a> &gt; 
+{{end}}
 {{range $index, $set := .Sets}}
-	&gt;
+	{{if $index}} &gt; {{end}}
 	<a class="packlink" href="#" data-pack="{{$index}}">{{$set}}</a>
 {{end}}
 {{end}}
-<div id="leftnav" class="nav"><img class="navArrow" src="arrow_left.jpg" /></div>
-<div id="rightnav" class="nav"><img class="navArrow" src="arrow_right.jpg" /></div>
-<div id="center">			
+<div id="leftnav" class="nav"><a href="#"><img class="navArrow" src="arrow_left.jpg" /></a></div>
+<div id="rightnav" class="nav"><a href="#"><img class="navArrow" src="arrow_right.jpg" /></a></div>
+<div id="center">		
+	{{if .HasDeck}}	
 	<div id="deck" class="page">		
 		<h1 class="titlenav">{{template "titlenav" .}}</h1>
 		{{if .Image}}<img id="deckImage" src="{{.Event}}/{{.Image}}"/>{{end}}
@@ -31,6 +34,7 @@
 		{{end}}
 		</p>
 	</div>
+	{{end}}
 	{{with $draft := .}}
 	{{range $pack := .Packs}}
 		{{range .Picks}}

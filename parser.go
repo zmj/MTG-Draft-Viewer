@@ -18,7 +18,6 @@ type Draft struct {
 	Deck []string
 	Comments []string
 	Image string
-	HasDeck bool
 }
 
 type Pack struct {
@@ -74,13 +73,7 @@ func NewDraft(log io.Reader) (*Draft, error) {
 			return nil, readErr
 		}
 		line := string(lineBytes)
-		if strings.HasPrefix(line,"--:") {
-			_,_,readErr := buf.ReadLine() // skip empty
-			if readErr == io.EOF {
-				break
-			} else if readErr != nil {
-				return nil, readErr
-			}
+		if strings.HasPrefix(line, "--:") {
 			continue
 		}
 		switch state {
