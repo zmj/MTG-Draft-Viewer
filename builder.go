@@ -30,12 +30,6 @@ func init() {
 	}
 }
 
-func (draft *Draft) HasDeck() bool {
-	hasComments := len(draft.Comments)>0 && len(draft.Comments[0])>0
-	hasImage := len(draft.Image)>0
-	return hasComments || hasImage
-}
-
 func wizardsUrl(set, card string) string {
 	c := []byte(card)
 	c = badChars.ReplaceAll(c, []byte{})	
