@@ -1,42 +1,42 @@
 package main
 
 import (
-	"regexp"
 	"bufio"
-	"io"
 	"errors"
+	"io"
+	"regexp"
 	"strings"
 )
 
 type Draft struct {
-	Event string
-	Player string
-	Players []string
-	Date string
-	Sets []string
-	Packs []*Pack
-	Deck []string
+	Event    string
+	Player   string
+	Players  []string
+	Date     string
+	Sets     []string
+	Packs    []*Pack
+	Deck     []string
 	Comments []string
-	Image string
-	HasDeck bool
+	Image    string
+	HasDeck  bool
 }
 
 type Pack struct {
-	Set string
-	Num int
+	Set   string
+	Num   int
 	Picks []*Pick
 }
 
 type Pick struct {
-	Num int
-	Cards []string
+	Num    int
+	Cards  []string
 	Choice string
-	Deck []string
+	Deck   []string
 }
 
 const (
 	LineSeparator = "\n"
-	EventId = iota
+	EventId       = iota
 	EventTime
 	StartPlayerList
 	PlayerList
@@ -48,15 +48,15 @@ const (
 
 var (
 	emptyLineReg, _ = regexp.Compile(`^\s*$`)
-	eventIdReg, _ = regexp.Compile(`^Event #:\s+(\d+)`)
+	eventIdReg, _   = regexp.Compile(`^Event #:\s+(\d+)`)
 	eventTimeReg, _ = regexp.Compile(`^Time:\s+([0-9/]+)`)
 
 	currentItemReg, _ = regexp.Compile(`^-->\s+(\S+.*)$`)
-	otherItemReg, _ = regexp.Compile(`^\s+(\S+.*)$`)
+	otherItemReg, _   = regexp.Compile(`^\s+(\S+.*)$`)
 
 	playersReg, _ = regexp.Compile(`Players:`)
-	packReg, _ = regexp.Compile(`-+ (\w+) -+`)
-	pickReg, _ = regexp.Compile(`Pack (\d+) pick (\d+):`)	
+	packReg, _    = regexp.Compile(`-+ (\w+) -+`)
+	pickReg, _    = regexp.Compile(`Pack (\d+) pick (\d+):`)
 )
 
 func NewDraft(log io.Reader) (*Draft, error) {
@@ -64,7 +64,7 @@ func NewDraft(log io.Reader) (*Draft, error) {
 	draft := new(Draft)
 	var pack *Pack
 	var pick *Pick
-	var m []string	
+	var m []string
 	buf := bufio.NewReader(log)
 	for {
 		lineBytes, _, readErr := buf.ReadLine()
@@ -74,8 +74,8 @@ func NewDraft(log io.Reader) (*Draft, error) {
 			return nil, readErr
 		}
 		line := string(lineBytes)
-		if strings.HasPrefix(line,"--:") {
-			_,_,readErr := buf.ReadLine() // skip empty
+		if strings.HasPrefix(line, "--:") {
+			_, _, readErr := buf.ReadLine() // skip empty
 			if readErr == io.EOF {
 				break
 			} else if readErr != nil {

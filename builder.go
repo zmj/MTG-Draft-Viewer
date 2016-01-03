@@ -1,9 +1,9 @@
 package main
 
 import (
-	"io"
-	"html/template"
 	"fmt"
+	"html/template"
+	"io"
 	"regexp"
 )
 
@@ -19,7 +19,7 @@ var aeChars, _ = regexp.Compile("[\u00c6\u00e6]")
 
 func init() {
 	tmpl = template.New("template")
-	funcs := map[string] interface{} {
+	funcs := map[string]interface{}{
 		"wizUrl": wizardsUrl,
 	}
 	tmpl = tmpl.Funcs(funcs)
@@ -32,7 +32,7 @@ func init() {
 
 func wizardsUrl(set, card string) string {
 	c := []byte(card)
-	c = badChars.ReplaceAll(c, []byte{})	
+	c = badChars.ReplaceAll(c, []byte{})
 	c = spaceChars.ReplaceAll(c, []byte("_"))
 	c = aChars.ReplaceAll(c, []byte("a"))
 	c = eChars.ReplaceAll(c, []byte("e"))
@@ -41,10 +41,10 @@ func wizardsUrl(set, card string) string {
 	//c = uChars.ReplaceAll(c, []byte("u"))
 	c = aeChars.ReplaceAll(c, []byte("ae"))
 
-	if set == "GTC" && (card=="Mountain" || card=="Plains" || card=="Island" || card=="Forest" || card=="Swamp") {
+	if set == "GTC" && (card == "Mountain" || card == "Plains" || card == "Island" || card == "Forest" || card == "Swamp") {
 		set = "RTR"
 	}
-	if (set == "BNG" || set == "JOU") && (card=="Mountain" || card=="Plains" || card=="Island" || card=="Forest" || card=="Swamp") {
+	if (set == "BNG" || set == "JOU") && (card == "Mountain" || card == "Plains" || card == "Island" || card == "Forest" || card == "Swamp") {
 		set = "THS"
 	}
 
