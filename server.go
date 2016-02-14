@@ -1,11 +1,11 @@
 package main
 
 import (
-	"net/http"
 	"fmt"
 	"io"
-	"strings"
+	"net/http"
 	"os"
+	"strings"
 )
 
 const (
@@ -28,7 +28,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
-	//get the draft file	
+	//get the draft file
 	log, _, loadLogErr := r.FormFile("log")
 	if loadLogErr != nil {
 		err = loadLogErr
@@ -78,10 +78,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		draft.Image = imgHeader.Filename
 		writeToFile(draft.Image, img)
 	}
-	draft.HasDeck = len(draft.Image)>0 || len(draft.Comments)>1
+	draft.HasDeck = len(draft.Image) > 0 || len(draft.Comments) > 1
 
 	//write the html
-	f, createErr := os.Create(event+".html")
+	f, createErr := os.Create(event + ".html")
 	if createErr != nil {
 		err = createErr
 		return
@@ -96,7 +96,7 @@ func makeFolder(event string) (err error) {
 		return
 	}
 
-	err = os.Mkdir(event, 0755 | os.ModeDir)
+	err = os.Mkdir(event, 0755|os.ModeDir)
 	if err != nil {
 		return
 	}
